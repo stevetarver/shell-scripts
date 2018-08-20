@@ -7,30 +7,54 @@
 # removing them.
 #
 # USE:
-#   ./SCRIPT.sh IMAGE_NAME [CONTAINER_NAME]
+#   see help()
 #
 # CAVEATS:
-# - OK to omit CONTAINER_NAME
-# - We grep for containers that match CONTAINER_NAME to catch all containers
-#   regardless of tag. You can take advantage of the grep matching, but ensure
-#   you don't cast to wide a net.
+# - We grep for containers created from IMAGE_NAME that match CONTAINER_NAME.
+#   Because we use grep to find it, you can use any grep expression to match
+#   multiple containers.
 # - We search for exact matches on IMAGE_NAME so './SCRIPT.sh alpine' will match
 #   'alpine:latest' and 'alpine:3.6', but not 'alpine-bash:latest'.
 #
+show_help () (
+    echo "Remove docker image and, optionally, associated containers"
+    echo
+    echo "USE:"
+    echo "  ${0} IMAGE_NAME [CONTAINER_NAME]"
+    echo
+    echo "  IMAGE_NAME:     'image:tag' for a single image, or 'image' to"
+    echo "                  remove matching images regardless of tag."
+    echo "  CONTAINER_NAME: container name using grep matching. Restricted to"
+    echo "                  those created from IMAGE_NAME. Optional."
+    echo
+    echo "EXAMPLES:"
+    echo
+    echo "  ${0} alpine:3.6   remove the alpine:3.6 image"
+    echo "  ${0} alpine       remove all 'alpine' images, e.g alpine:3.5, alpine:latest"
+    echo
+    exit 1
+)
+
 THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
 (
     # docker commands are not directory sensitive - no cd ${THIS_SCRIPT_DIR} needed
 
     ECHO_PREFIX='===>'
+    IMAGE_NAME="${1}"
+    CONTAINER_NAME="${2}"
+
+    # Verify preconditions
+    # Ensure user provided an IMAGE_NAME - don't want to accidentally delete everything
+    [ "${IMAGE_NAME}x" = "x" ] && show_help
 
     # Does caller want us to remove containers
-    if [ -n "${CONTAINER_NAME}" ]; then
-        # Does the container exist - note grep matching
-        CONTAINERS=$(docker ps -a | grep ${CONTAINER_NAME} | cut -f1 -d' ')
+    if [ "${CONTAINER_NAME}x" != "x" ]; then
+        # Does the container exist?
+        CONTAINERS=$(docker ps -a -f "ancestor=${IMAGE_NAME}" | grep ${CONTAINER_NAME} | cut -f1 -d' ')
 
-        if [ -n "${CONTAINERS}" ]; then
+        if [ "${CONTAINERS}x" != "x" ]; then
             echo "${ECHO_PREFIX} Stopping and removing ${CONTAINER_NAME} containers"
-            docker rm -f -v ${CONTAINERS}
+            docker rm -fv ${CONTAINERS}
         else
             echo "${ECHO_PREFIX} No ${CONTAINER_NAME} containers running"
         fi
@@ -45,6 +69,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
         echo "${ECHO_PREFIX} No ${IMAGE_NAME} images exist"
     fi
 
+    # present prompt to user to allow them to opt out
     echo "${ECHO_PREFIX} Removing orphaned docker volumes"
     docker volume prune
 
@@ -53,7 +78,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     # see https://www.projectatomic.io/blog/2015/07/what-are-docker-none-none-images/
     # Currently, this casts too wide a net
     # DANGLING=$(docker images -q -f 'dangling=true')
-    # if [ -n "${DANGLING}" ]; then
+    # if [ "${DANGLING}x" != "x" ]; then
     #     echo "${ECHO_PREFIX} Removing dangling images"
     #     docker rmi -f ${DANGLING}
     # else
