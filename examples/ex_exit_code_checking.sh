@@ -23,7 +23,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
 
     # intentionally turn off error check for this script call
     set +e
-    ./return_exit_code.sh ${INTERNAL_CODE}
+    return_exit_code.sh ${INTERNAL_CODE}
 
     # capture the exit code - any operation will overwrite it - including test & echo
     EXIT_CODE=$?

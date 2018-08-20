@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 #
 # This line tells what I do
 #
