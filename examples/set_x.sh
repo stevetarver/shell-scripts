@@ -9,7 +9,7 @@
 # in the script we call.
 #
 # You could use a DEBUG environment variable to enable command logging like this:
-#   [ -n "${DEBUG}" ] && set -x
+#   [ "${DEBUG}x" != "x" ] && set -x
 #
 # USE:
 #   ./ex_set_x.sh
@@ -21,7 +21,8 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
 (
     cd ${THIS_SCRIPT_DIR}
 
-    # turn on cmd logging
+    # TODO allow user to specify -x and error code, try including that on the shebang
+    # enable cmd logging
     set -x
     return_exit_code.sh 1
 
