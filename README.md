@@ -2,8 +2,13 @@ This repo contains Bourne shell scripts and snippets I steal from to create prod
 
 **TODO** Add blog link above when posted
 
-## Bourne shell references
+## Bourne resources
 
+Reference material
+
+* [Alpine Linux ash (sh) man page](https://linux.die.net/man/1/ash)
+* [WikiBooks: Bourne Shell Scripting](https://en.wikibooks.org/wiki/Bourne_Shell_Scripting)
+* [Bourne shell scripting tutorial](https://www.shellscript.sh)
 * [Heirloom Bourne shell man page](http://heirloom.sourceforge.net/sh/sh.1.html)
 * [FreeBSD Bourne shell man page](https://www.freebsd.org/cgi/man.cgi?query=sh&manpath=FreeBSD+7.1-RELEASE)
 

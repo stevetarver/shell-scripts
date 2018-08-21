@@ -5,18 +5,22 @@
 # This paragraph provides more details if necessary
 #
 # USE:
-#   show calling conventions here
+#   Show calling conventions here
+#
+# NOTES:
+#   Note any assumptions, preconditions, side effects
 #
 # CAVEATS:
-#   note any assumptions, preconditions, side effects
+#   Any warnings for script use?
 #
 THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
 (
-   cd ${THIS_SCRIPT_DIR}
-   # do some stuff in this dir without changing pwd
+    cd ${THIS_SCRIPT_DIR}
+    # Do some stuff in this dir without changing pwd
 )
 
 (
-   cd ${THIS_SCRIPT_DIR}/..
-   # do some stuff in my parent dir without changing pwd
+    cd ${THIS_SCRIPT_DIR}/..
+    # Do some stuff in my parent dir without changing pwd
+    # Each directory change should be scoped with ( )
 )
