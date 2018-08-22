@@ -22,15 +22,18 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     [ "${1}x" = "x" ] && INTERNAL_CODE=${1}
 
     # intentionally turn off error check for this script call
+    # - as tightly scoped as possible
     set +e
     return_exit_code.sh ${INTERNAL_CODE}
+    set -e
 
     # capture the exit code - any operation will overwrite it - including test & echo
     EXIT_CODE=$?
 
     # provide blocks to handle each error code
-    # note that ${EXIT_CODE} is not wrapped in double quotes because we know
-    # we are only working with numbers.
+    # Note: we are not following our standard pattern [ "${EXIT_CODE}x" = "x" ]
+    #       because we *know* the value will exist AND we are *only* working
+    #       with numbers.
     if [ ${EXIT_CODE} -eq 0 ]; then
         # Do what ever with script success
         echo "Script succeeded. Exit code: ${EXIT_CODE}"
@@ -41,7 +44,6 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
         echo "Unrecoverable error. Exit code: ${EXIT_CODE}. Aborting"
         exit ${EXIT_CODE}
     fi
-    set -e
 
     # continue script execution with error checking on
 )

@@ -16,8 +16,13 @@
 THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
 (
     cd ${THIS_SCRIPT_DIR}
-    # Do some stuff in this dir without changing pwd
+    # Do stuff in the dir the script lives in without changing pwd
+    # Know that we know our dir, constructing relative paths is easy
+    # NOTE: the parens isolate the change by shifting into a subshell
 )
+
+# You could do directory insensitive things here, but have a good
+# reason for not just putting them into a single paren block
 
 (
     cd ${THIS_SCRIPT_DIR}/..

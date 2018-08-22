@@ -1,13 +1,13 @@
 #!/bin/sh -e
 #
-# I remove the specified docker container and image
+# I remove the specified docker image and. optionally, associated containers
 #
 # This could be used during a build cycle to clean up build artifacts.
 # Demonstrates checking for images and containers and conditionally
 # removing them.
 #
 # USE:
-#   see help()
+#   See help()
 #
 # CAVEATS:
 # - We grep for containers created from IMAGE_NAME that match CONTAINER_NAME.
@@ -16,7 +16,7 @@
 # - We search for exact matches on IMAGE_NAME so './SCRIPT.sh alpine' will match
 #   'alpine:latest' and 'alpine:3.6', but not 'alpine-bash:latest'.
 #
-show_help () (
+show_help() (
     echo "Remove docker image and, optionally, associated containers"
     echo
     echo "USE:"
@@ -73,7 +73,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     echo "${ECHO_PREFIX} Removing orphaned docker volumes"
     docker volume prune
 
-    # TODO: clean up dangling images and volumes to keep the VM clean
+    # TODO: clean up dangling images to keep the VM clean
 
     # see https://www.projectatomic.io/blog/2015/07/what-are-docker-none-none-images/
     # Currently, this casts too wide a net

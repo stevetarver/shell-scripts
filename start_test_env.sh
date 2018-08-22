@@ -32,7 +32,7 @@ fi
 (
     cd ${THIS_SCRIPT_DIR}
 
-    # Create/start our container
+    # Create/start our container, and run sh from /tmp
     docker run -it --rm     \
         --name alpine-test  \
         -v $(pwd):/tmp      \

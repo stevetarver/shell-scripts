@@ -4,7 +4,7 @@ This repo contains Bourne shell scripts and snippets I steal from to create prod
 
 ## Bourne resources
 
-Reference material
+Man pages and tutorials
 
 * [Alpine Linux ash (sh) man page](https://linux.die.net/man/1/ash)
 * [WikiBooks: Bourne Shell Scripting](https://en.wikibooks.org/wiki/Bourne_Shell_Scripting)
@@ -12,11 +12,14 @@ Reference material
 * [Heirloom Bourne shell man page](http://heirloom.sourceforge.net/sh/sh.1.html)
 * [FreeBSD Bourne shell man page](https://www.freebsd.org/cgi/man.cgi?query=sh&manpath=FreeBSD+7.1-RELEASE)
 
-Some nice articles
+Tips and tricks type articles
 
 * https://codeburst.io/13-tips-tricks-for-writing-shell-scripts-with-awesome-ux-19a525ae05ae
 * http://www.etalabs.net/sh_tricks.html
 
+Character color control
+
+* Color codes: https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
 ## TODO
 
