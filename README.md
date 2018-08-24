@@ -2,7 +2,17 @@ This repo contains Bourne shell scripts and snippets I steal from to create prod
 
 **TODO** Add blog link above when posted
 
-## Bourne resources
+## Resources
+
+### Alpine Linux
+
+* [Home](https://alpinelinux.org)
+* [Doc](https://wiki.alpinelinux.org/wiki/Main_Page)
+* [Packages](https://pkgs.alpinelinux.org/packages)
+
+### Bourne
+
+Alpine Linux uses the Bourne shell packaged with [BusyBox](https://busybox.net/) - the [Almquist shell](https://en.wikipedia.org/wiki/Almquist_shell), aka 'A Shell', 'ash' or 'sh'. 
 
 Man pages and tutorials
 

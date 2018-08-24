@@ -31,8 +31,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     info '  NOTES:'
     info '  - Interesting edge cases: null, empty, and space strings.'
     info '  - We omit showing buggy code that does not single quote operators to avoid'
-    info '    file reads, writes (replaces) etc. You get what can happen, just don'\''t do it.'
-    info
+    info '    redirection to file, stdout, stderr, etc.'
     info
     info '  CAVEATS:'
     info '  - If you do not surround the variable with doublequotes, null, empty, and'
@@ -44,8 +43,6 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     info '    apply consistently.'
     divider
 
-    RESULT=$([ "${1}" = "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
-    info "${RESULT} is the correct answer."
     info 'buggy  : [  ${1}  '\''='\''  ${2} ] && true || false'
     [  ${1}  '='  ${2} ] && true || false
     info 'buggy  : [ "${1}" '\''='\''  ${2} ] && true || false'
@@ -54,11 +51,11 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     [  ${1}  '=' "${2}" ] && true || false
     info 'correct: [ "${1}" '\''='\'' "${2}" ] && true || false'
     [ "${1}" '=' "${2}" ] && true || false
+    RESULT=$([ "${1}" = "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
+    info "${RESULT} is the correct answer."
 
     divider
 
-    RESULT=$([ "${1}" != "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
-    info "${RESULT} is the correct answer."
     info 'buggy  : [  ${1}  '\''!='\''  ${2} ] && true || false'
     [  ${1}  !=  ${2} ] && true || false
     info 'buggy  : [ "${1}" '\''!='\''  ${2} ] && true || false'
@@ -67,11 +64,11 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     [  ${1}  != "${2}" ] && true || false
     info 'correct: [ "${1}" '\''!='\'' "${2}" ] && true || false'
     [ "${1}" != "${2}" ] && true || false
+    RESULT=$([ "${1}" != "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
+    info "${RESULT} is the correct answer."
 
     divider
 
-    RESULT=$([ "${1}" '>' "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
-    info "${RESULT} is the correct answer."
     info 'buggy  : [  ${1}  '\''>'\''  ${2} ] && true || false'
     [  ${1}  '>'  ${2} ] && true || false
     info 'buggy  : [ "${1}" '\''>'\''  ${2} ] && true || false'
@@ -80,11 +77,11 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     [  ${1}  '>' "${2}" ] && true || false
     info 'correct: [ "${1}" '\''>'\'' "${2}" ] && true || false'
     [ "${1}" '>' "${2}" ] && true || false
+    RESULT=$([ "${1}" '>' "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
+    info "${RESULT} is the correct answer."
 
     divider
 
-    RESULT=$([ "${1}" '<' "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
-    info "${RESULT} is the correct answer."
     info 'buggy  : [  ${1}  '\''<'\''  ${2} ] && true || false'
     [  ${1}  '<'  ${2} ] && true || false
     info 'buggy  : [ "${1}" '\''<'\''  ${2} ] && true || false'
@@ -93,6 +90,8 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     [  ${1}  '<' "${2}" ] && true || false
     info 'correct: [ "${1}" '\''<'\'' "${2}" ] && true || false'
     [ "${1}" '<' "${2}" ] && true || false
+    RESULT=$([ "${1}" '<' "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
+    info "${RESULT} is the correct answer."
 
     bar
 )

@@ -35,21 +35,22 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     info "    ${0} '  '"
     divider
 
-    RESULT=$([ -n "${1}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
-    info "${RESULT} is the correct answer."
 
     info 'buggy  : [ -n  ${1}  ] && true || false'
     [ -n ${1} ] && true || false
     info 'correct: [ -n "${1}" ] && true || false'
     [ -n "${1}" ] && true || false
-
-    RESULT=$([ "${1}x" = "x" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
+    RESULT=$([ -n "${1}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
     info "${RESULT} is the correct answer."
+
+    divider
 
     info 'buggy  : [ -z  ${1}  ] && true || false'
     [ -z ${1} ] && true || false
     info 'correct: [ -z "${1}" ] && true || false'
     [ -z "${1}" ] && true || false
+    RESULT=$([ "${1}x" = "x" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
+    info "${RESULT} is the correct answer."
 
     bar
 )
