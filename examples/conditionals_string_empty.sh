@@ -25,7 +25,8 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     info
     info '  LESSON: ALWAYS surround the variable with doublequotes.'
     info
-    info '  Interesting edge cases: null, empty, and space strings.'
+    info '  NOTES:'
+    info '  - Interesting edge cases: null, empty, and space strings.'
     info
     info '  Without VAR wrapped in double quotes, the -n test returns the wrong value for:'
     info "    ${0}"

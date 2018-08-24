@@ -12,18 +12,6 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     source 'conditionals_common.sh'
 
     bar
-    info 'Because of the buggy code examples, you may create files that may alter results.'
-    info 'For each run, we will create a temp dir for that run and clean it up when complete.'
-    info
-    info 'CAVEATS:'
-    info ' - If you use args like 1, 2, you will redirect output to stdout, stderr'
-    info
-    MY_TMP_DIR=$(mktemp -d)
-    info "Created temp dir '${MY_TMP_DIR}' and changing to that dir"
-    cd ${MY_TMP_DIR}
-    pwd
-
-    bar
     info 'String comparison tests'
     info
     info "USE: ${0} S1 S2"
@@ -38,9 +26,13 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     info
     info '  LESSONS:'
     info '  - ALWAYS surround the variable with doublequotes.'
-    info '  - ALWAYS surround the operator with single quotes'
+    info '  - ALWAYS surround the operator with single quotes.'
     info
-    info '  Interesting edge cases: null, empty, and space strings.'
+    info '  NOTES:'
+    info '  - Interesting edge cases: null, empty, and space strings.'
+    info '  - We omit showing buggy code that does not single quote operators to avoid'
+    info '    file reads, writes (replaces) etc. You get what can happen, just don'\''t do it.'
+    info
     info
     info '  CAVEATS:'
     info '  - If you do not surround the variable with doublequotes, null, empty, and'
@@ -51,8 +43,6 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     info '    problems with null and empty strings. Better to have one rule that you'
     info '    apply consistently.'
     divider
-
-    # todo: figure out if I want to show redirects unquoted
 
     RESULT=$([ "${1}" = "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
     info "${RESULT} is the correct answer."
@@ -83,7 +73,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     RESULT=$([ "${1}" '>' "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
     info "${RESULT} is the correct answer."
     info 'buggy  : [  ${1}  '\''>'\''  ${2} ] && true || false'
-    [  ${1}  >  ${2} ] && true || false
+    [  ${1}  '>'  ${2} ] && true || false
     info 'buggy  : [ "${1}" '\''>'\''  ${2} ] && true || false'
     [ "${1}" '>'  ${2} ] && true || false
     info 'buggy  : [  ${1}  '\''>'\'' "${2}" ] && true || false'
@@ -91,11 +81,18 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     info 'correct: [ "${1}" '\''>'\'' "${2}" ] && true || false'
     [ "${1}" '>' "${2}" ] && true || false
 
-    bar
-    info 'The following files were created in the temp directory'
-    ls -la ${MY_TMP_DIR}
+    divider
 
-    info "Removing temp directory ${MY_TMP_DIR}"
-    rm -rf ${MY_TMP_DIR}
+    RESULT=$([ "${1}" '<' "${2}" ] && echo -e "${TRUE_STRING}" || echo -e "${FALSE_STRING}")
+    info "${RESULT} is the correct answer."
+    info 'buggy  : [  ${1}  '\''<'\''  ${2} ] && true || false'
+    [  ${1}  '<'  ${2} ] && true || false
+    info 'buggy  : [ "${1}" '\''<'\''  ${2} ] && true || false'
+    [ "${1}" '<'  ${2} ] && true || false
+    info 'buggy  : [  ${1}  '\''<'\'' "${2}" ] && true || false'
+    [  ${1}  '<' "${2}" ] && true || false
+    info 'correct: [ "${1}" '\''<'\'' "${2}" ] && true || false'
+    [ "${1}" '<' "${2}" ] && true || false
+
     bar
 )
