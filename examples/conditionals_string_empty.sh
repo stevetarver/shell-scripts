@@ -23,7 +23,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     info '  Use in Bourne scripts is usually:'
     info '    [ flag "${VAR}" ]'
     info
-    info '  LESSON: You MUST always surround the variable with doublequotes.'
+    info '  LESSON: ALWAYS surround the variable with doublequotes.'
     info
     info '  Interesting edge cases: null, empty, and space strings.'
     info
