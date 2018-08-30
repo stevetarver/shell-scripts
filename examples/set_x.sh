@@ -2,6 +2,9 @@
 #
 # Example: Using set's x flag; the command logger
 #
+# USE:
+#   ./set_x.sh
+#
 # NOTES:
 #   Command logging can be turned on with 'set -x' and off with 'set +x'
 #
@@ -11,12 +14,15 @@
 #   different sub-shell.
 #
 #   You could use a DEBUG environment variable to enable command logging like this:
-#      [ "${DEBUG}x" != "x" ] && set -x
+#      [ -n "${DEBUG}" ] && set -x
 #   That could be useful while comparing script operation with and without command
 #   logging, especially if several scripts are involved.
 #
-# USE:
-#   ./set_x.sh
+# EXAMPLES:
+#   see show_help()
+#
+# EXIT CODES:
+#   None - purely demonstrational
 #
 # CAVEATS:
 #   Shebang omits -e, we are manually checking for errors
@@ -57,7 +63,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     echo "  Executing the code with command logging off:"
     echo
 
-    if [ "${1}x" != "x" ]; then
+    if [ -n "${1}" ]; then
         printf "%s\\n" "${1}"
     fi
 )

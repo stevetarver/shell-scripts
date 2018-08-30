@@ -45,14 +45,14 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
 
     # Verify preconditions
     # Ensure user provided an IMAGE_NAME - don't want to accidentally delete everything
-    [ "${IMAGE_NAME}x" = "x" ] && show_help
+    [ -z "${IMAGE_NAME}" ] && show_help
 
     # Does caller want us to remove containers
-    if [ "${CONTAINER_NAME}x" != "x" ]; then
+    if [ -n "${CONTAINER_NAME}" ]; then
         # Does the container exist?
-        CONTAINERS=$(docker ps -a -f "ancestor=${IMAGE_NAME}" | grep ${CONTAINER_NAME} | cut -f1 -d' ')
+        CONTAINERS=$(docker ps -a -f "ancestor=${IMAGE_NAME}" | grep "${CONTAINER_NAME}" | cut -f1 -d' ')
 
-        if [ "${CONTAINERS}x" != "x" ]; then
+        if [ -n "${CONTAINERS}" ]; then
             echo "${ECHO_PREFIX} Stopping and removing ${CONTAINER_NAME} containers"
             docker rm -fv ${CONTAINERS}
         else

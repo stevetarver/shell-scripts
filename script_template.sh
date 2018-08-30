@@ -10,6 +10,12 @@
 # NOTES:
 #   Note any assumptions, preconditions, side effects
 #
+# EXAMPLES:
+#   Provide example use here
+#
+# EXIT CODES:
+#   Describe all custom exit codes here
+#
 # CAVEATS:
 #   Any warnings for script use?
 #
@@ -17,7 +23,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
 (
     cd ${THIS_SCRIPT_DIR}
     # Do stuff in the dir the script lives in without changing pwd
-    # Know that we know our dir, constructing relative paths is easy
+    # Now that we know our dir, constructing relative paths is easy
     # NOTE: the parens isolate the change by shifting into a subshell
 )
 

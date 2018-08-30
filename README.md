@@ -22,6 +22,8 @@ Man pages and tutorials
 * [Heirloom Bourne shell man page](http://heirloom.sourceforge.net/sh/sh.1.html)
 * [FreeBSD Bourne shell man page](https://www.freebsd.org/cgi/man.cgi?query=sh&manpath=FreeBSD+7.1-RELEASE)
 
+* [Bourne shell command language](http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_05_02)
+
 Tips and tricks type articles
 
 * https://codeburst.io/13-tips-tricks-for-writing-shell-scripts-with-awesome-ux-19a525ae05ae
@@ -29,7 +31,16 @@ Tips and tricks type articles
 
 Character color control
 
-* Color codes: https://misc.flogisoft.com/bash/tip_colors_and_formatting
+* [Color codes in the shell](https://misc.flogisoft.com/bash/tip_colors_and_formatting)
+
+Regex
+
+* [Crowd Sourced Regex library](http://regexlib.com)
+
+getopts
+
+* [IEEE Open Group Base Specifications](http://pubs.opengroup.org/onlinepubs/9699919799/)
+* [http://wiki.bash-hackers.org/howto/getopts_tutorial](http://wiki.bash-hackers.org/howto/getopts_tutorial)
 
 ## TODO
 

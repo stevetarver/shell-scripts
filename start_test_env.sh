@@ -32,7 +32,8 @@ fi
 (
     cd ${THIS_SCRIPT_DIR}
 
-    # Create/start our container, and run sh from /tmp
+    echo "Running an Alpine Linux container with command: sh -c 'cd /tmp; sh'"
+    echo "and this project repo ($(pwd)) mounted as '/tmp'"
     docker run -it --rm     \
         --name alpine-test  \
         -v $(pwd):/tmp      \
