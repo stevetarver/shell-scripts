@@ -60,9 +60,9 @@ show_bg_colors() {
     stderr "This bg color is $(bg_light_magenta 'XXXX LIGHT MAGENTA ' $(bold 'BOLD') ' ' $(dim 'DIM') ' ' $(italics 'ITALICS') ' ' $(underline 'UNDERLINE') ' ' $(reverse 'REVERSE')  )"
 }
 
-#THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
+THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
 (
-#    cd ${THIS_SCRIPT_DIR}
+    cd ${THIS_SCRIPT_DIR}
     source colors.sh
 
     stderr 'Examples of foreground colors and styles'
@@ -117,6 +117,14 @@ EOT
     stderr '  You can see that all color codes are removed from stderr devices that do not support color with:'
     stderr '    ./colors_test.sh 2>error.txt'
 
+    stderr
+    stderr 'Use in functions:'
+    stderr '  The way line nested functions are implemented may give unexpected results during expansion.'
+    stderr '  If you have a utility function that prints errors, you can expand the arguments before sending to a color function.'
+    stderr '    error() {'
+    stderr '      local L="===> ${@}"'
+    stderr '      stderr "$(red "${L})"'
+    stderr '    }'
     stderr
 
 )

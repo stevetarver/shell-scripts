@@ -123,10 +123,10 @@ stderr() {
 # ${2} : reset code
 # rest : text
 _colorize() {
-    C="${1}"
-    R="${2}"
+    local C="${1}"
+    local R="${2}"
     shift 2
-    TEXT="${@}"
+    local TEXT="${@}"
     if [ -t 2 ]; then
         printf "%b" "${C}${TEXT}${R}"
     else
