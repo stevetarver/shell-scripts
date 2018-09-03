@@ -19,11 +19,15 @@
 #
 
 # Print a green 'Pass'
+# ${1} : true | false
+# ${2} : text reprof called function
 pass() {
     stderr "$(green 'Pass'): ${1} = ${2}"
 }
 
 # Print a red 'Fail'
+# ${1} : true | false
+# ${2} : text reprof called function
 fail() {
     stderr "$(red 'Fail'): ${1} = ${2}"
 }
