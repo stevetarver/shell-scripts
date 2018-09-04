@@ -9,18 +9,19 @@
 # To Public License, Version 2, as published by Sam Hocevar. See
 # http://sam.zoy.org/wtfpl/COPYING for more details.
 
-echo 'Printing 256 foreground and background colors:'
+echo 'Printing 256 color background, forground, and style examples'
 
-for fgbg in 38 48 ; do # Foreground / Background
-    for color in $(seq 0 255) ; do # Colors
-        # Display the color
-        printf "\e[${fgbg};5;%sm  %3s  \e[0m" $color $color
-        # Display 6 colors per lines
-        if [ $(( ($color + 1) % 6)) == 4 ] ; then
-            echo # New line
-        fi
-    done
-    echo # New line
+#Background
+for clbg in $(seq 40 47) $(seq 100 107) 49 ; do
+	#Foreground
+	for clfg in $(seq 30 37) $(seq 90 97) 39 ; do
+		#Formatting
+		for attr in 0 1 2 4 5 7 ; do
+			#Print the result
+			printf "\e[${attr};${clbg};${clfg}m ^[${attr};${clbg};${clfg}m \e[0m"
+		done
+		echo #Newline
+	done
 done
 
 exit 0

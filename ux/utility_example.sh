@@ -63,10 +63,15 @@
 #
 # The only down side, is that because every space is printed, we must out-dent to the gutter
 # for proper formatting. The lack of indention is a bit ugly inside a function.
+#
+
+# Define Usage in its own variable for use in validation errors
+USAGE="Usage: ${0} -i int [-htf] [-v enum] [-s string] [-l string]... [file...]"
+
 show_help() {
 cat >&2 <<EOT
 
-Usage: ${0} -i int [-htf] [-v enum] [-s string] [-l string]... [file...]
+${USAGE}
 
 Example script parsing common command line argument syntax patterns.
 Prints parsed arg values and exits.
@@ -138,33 +143,46 @@ is_msg_allowed() {
 # Print developer diagnostic information - for debugging and because this is a demo.
 getopts_info() {
     if is_msg_allowed 'debug' ; then
-        local L="===> Processing '${1}': OPT = '${OPT}', OPTARG = '${OPTARG}', OPTIND = '${OPTIND}'"
-        stderr "$(green ${L})"
+        stderr "$(green "===> Processing '${1}': OPT = '${OPT}', OPTARG = '${OPTARG}', OPTIND = '${OPTIND}'")"
     fi
 }
 
 # Print ${1} in red
 error() {
-    local L="===> ${1}"
-    stderr "$(red ${L})"
+    stderr "$(red '===>' ${1})"
+}
+
+# A general handler for syntax related errors
+# Print the command line, usage, help option, and exit 2 - the syntax exit error.
+syntax_exit() {
+    error "You typed: ${CMD_LINE}"
+    error "${USAGE}"
+    error "For more details, see: ${0} -h"
+    exit 2
 }
 
 # Print an arg type validation error in red
 # ${1} : expected type
 arg_type_error() {
     error "Invalid '-${OPT}' arg. Expected type ${1}, got: '-${OPT}' = '${OPTARG}' at index ${OPTIND}"
-    error "You typed: ${CMD_LINE}"
-    error "For usage details, see: ${0} -h"
-    exit 2
+    syntax_exit
 }
 
 # Print a missing required option error in red
 # ${1} : option character
 missing_required_option_error() {
     error "Missing required option: '-${1}'"
-    error "You typed: ${CMD_LINE}"
-    error "For usage details, see: ${0} -h"
-    exit 2
+    error "This option is required; this script cannot work without it."
+    syntax_exit
+}
+
+# Print a duplicate option error in red
+# ${1} : option character
+duplicate_option_error() {
+    error "Duplicate option: '-${1}'"
+    error "This option does not support multiple values; this script cannot"
+    error "tell which option value you intended."
+    syntax_exit
 }
 
 # Print a command line syntax error in red
@@ -172,9 +190,7 @@ missing_required_option_error() {
 # Note: this can only be used from ?), :)
 syntax_error() {
     error "${1} '-${OPTARG}'"
-    error "You typed: ${CMD_LINE}"
-    error "For usage details, see: ${0} -h"
-    exit 2
+    syntax_exit
 }
 
 # Perform the main work of this script. In this case, just print options, args, operands
@@ -207,8 +223,8 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
 (
     # Start work in the script dir for to easily locate include scripts
     cd ${THIS_SCRIPT_DIR}
-    source validation.sh
-    source colors.sh
+    source ../common/validation.sh
+    source ../common/colors.sh
 
     # Set defaults for all command line arguments: 0=on, 1=off.
     # Command line parsing will update these to match caller's desires.
@@ -225,8 +241,8 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     V_VALUE='debug'
     OPERANDS=
 
-    # getopts takes care of ensuring only allowed options are specified and required
-    # option-arguments exist.
+    # getopts ensures that only allowed options are present and required
+    # option-arguments exist - according to the getopts option string.
     # We still have to::
     # - ensure required options have been provided
     # - ensure each option-argument is a valid type
@@ -244,8 +260,12 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
             i)  ## -i integer, required, default = none
                 getopts_info '-i'
                 if is_int "${OPTARG}" ; then
-                    I_OPTION=0
-                    I_VALUE="${OPTARG}"
+                    if [ "${I_OPTION}" = "0" ] ; then
+                        duplicate_option_error 'i'
+                    else
+                        I_OPTION=0
+                        I_VALUE="${OPTARG}"
+                    fi
                 else
                     arg_type_error 'integer'
                 fi
@@ -257,11 +277,13 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
                 ;;
             s)  ## -s string, optional
                 getopts_info '-s'
-                # TODO: validate no newlines? no leading, trailing spaces?
-                # TODO: validation is off
                 if is_not_blank "${OPTARG}" ; then
-                    S_OPTION=0
-                    S_VALUE="${OPTARG}"
+                    if [ "${S_OPTION}" = "0" ] ; then
+                        duplicate_option_error 's'
+                    else
+                        S_OPTION=0
+                        S_VALUE="${OPTARG}"
+                    fi
                 else
                     arg_type_error 'string'
                 fi
@@ -272,10 +294,14 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
                 ;;
             v)  ## -v enum, default = 'debug'
                 if is_enum "${OPTARG}" ${V_ENUM_LIST} ; then
-                    V_OPTION=0
-                    V_VALUE=${OPTARG}
-                    # Show debug information AFTER we set verbosity - caller may not want it
-                    getopts_info '-v'
+                    if [ "${V_OPTION}" = "0" ] ; then
+                        duplicate_option_error 'v'
+                    else
+                        V_OPTION=0
+                        V_VALUE=${OPTARG}
+                        # Show debug information AFTER we set verbosity - caller may not want it
+                        getopts_info '-v'
+                    fi
                 else
                     arg_type_error "enum, one of: ${V_ENUM_LIST}"
                 fi
@@ -313,15 +339,17 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     if [ ${I_OPTION} -ne 0 ] ; then missing_required_option_error 'i'; fi
 
     # Files readable validation
+    # TODO: test -r allowing 222 files, works on mac
     for FILE in ${OPERANDS}; do
-        if test -r "${FILE}" ; then
-            error "All files must exist and be readable"
-            error "${FILE} either does not exist or is not readable"
-            exit 2
+        echo "testing ${FILE}"
+        if ! [ -r ${FILE} ]; then
+            error "Each operand is a file that must exist and be readable."
+            error "'${FILE}' either does not exist or is not readable."
+            syntax_exit
         fi
     done
 
-    # Conflicting arg validation - we don't have any cross-validation, but something to think about
+    # Conflicting arg validation - we don't have any cross-validation, but something to think about...
 
     # All command line args processed and validated - do the needful
     perform_work

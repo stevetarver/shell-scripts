@@ -53,10 +53,10 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     #       double quotes.
     if [ ${EXIT_CODE} -eq 0 ]; then
         # Do what ever with script success
-        [ -n "no-op" ] # a benign operation returning 0
+        : # a benign operation returning 0
     elif [ ${EXIT_CODE} -eq 4 ]; then
         # Do what ever with script failure returning exit code 4
-        [ -n "no-op" ] # a benign operation returning 0
+        : # a benign operation returning 0
     else
         exit 4
     fi

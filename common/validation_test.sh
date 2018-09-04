@@ -32,13 +32,13 @@ fail() {
     stderr "$(red 'Fail'): ${1} = ${2}"
 }
 
-# Report predicates = true (0)
+# Test predicates that should return true (0) and print results
 should_be_true() {
     # predicate | if true        | if false
     eval ${1}  && pass 'true ' "${1}" || fail 'false' "${1}"
 }
 
-# Report predicates = false (1)
+# Test predicates that should return false (1) and print results
 should_be_false() {
     # predicate | if true        | if false
     eval ${1}  && fail 'true ' "${1}" || pass 'false' "${1}"
@@ -145,7 +145,5 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     should_be_false 'is_enum " "    ${ENUM}'
     should_be_false 'is_enum ""     ${ENUM}'
     should_be_false 'is_enum        ${ENUM}'
-
-
 )
 

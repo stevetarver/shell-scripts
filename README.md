@@ -1,13 +1,17 @@
-This repo contains Bourne shell scripts and snippets I steal from to create production and operational scripts, and now you can to! Wrote a blog about it, wanna see it? Here you [go]()
+This repo contains Bourne shell templates, scripts, snippets, and a playground that I use to experiment with new concepts. This is the boilerplate I start most production quality scripts from, and now you can to! Wrote a blog about it, wanna see it? Here you go:
 
-**TODO** Add blog link above when posted
+* [Shell Scripts 1: Bourne back again](https://stevetarver.github.io/2018/06/12/shell-scripts-1-basics.html)
+* Shell Scripts 2: Creating a great UX
+* Shell Scripts 3: Program flow control
+* Shell Scripts 4: Signals, Traps, and Docker scripts
+
 
 ## Resources
 
 ### Alpine Linux
 
 * [Home](https://alpinelinux.org)
-* [Doc](https://wiki.alpinelinux.org/wiki/Main_Page)
+* [Wiki](https://wiki.alpinelinux.org/wiki/Main_Page)
 * [Packages](https://pkgs.alpinelinux.org/packages)
 
 ### Bourne
@@ -26,7 +30,6 @@ Alpine Linux uses the Bourne shell packaged with [BusyBox](https://busybox.net/)
 #### Tutorials
 
 * [WikiBooks: Bourne Shell Scripting](https://en.wikibooks.org/wiki/Bourne_Shell_Scripting)
-* [Bourne shell scripting tutorial](https://www.shellscript.sh)
 * [Bourne shell command language](http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_05_02)
 * [bash-hackers getopts tutorial](http://wiki.bash-hackers.org/howto/getopts_tutorial)
 
@@ -37,11 +40,8 @@ Alpine Linux uses the Bourne shell packaged with [BusyBox](https://busybox.net/)
 
 #### Character color control
 
+* [Standard ECMA-48](https://www.ecma-international.org/publications/files/ECMA-ST/Ecma-048.pdf) - see SGR - SELECT GRAPHIC RENDITION.
 * [Color codes in the shell](https://misc.flogisoft.com/bash/tip_colors_and_formatting)
-
-#### Regex
-
-* [Crowd Sourced Regex library](http://regexlib.com)
 
 
 ## TODO
