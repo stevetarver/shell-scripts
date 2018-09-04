@@ -21,7 +21,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     info '  s1 < s2    True if string s1 comes before s2 based on the binary value of their characters.'
     info '  s1 > s2    True if string s1 comes after s2 based on the binary value of their characters.'
     info
-    info '  In Bourne scripts, usually:'
+    info '  Use in Bourne scripts is usually:'
     info '    [ "${S1}" '\''op'\'' "${S2}" ]'
     info
     info 'LESSONS:'

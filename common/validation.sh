@@ -1,4 +1,10 @@
 #!/bin/sh -e
+##############################################################
+#  Copyright (c) 2018 Steve Tarver. All rights reserved.     #
+#                                                            #
+#  This work is licensed under the terms of the MIT license. #
+#  For a copy, see <https://opensource.org/licenses/MIT>.    #
+##############################################################
 #
 # Common validation functions
 #

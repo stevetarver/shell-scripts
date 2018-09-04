@@ -1,4 +1,10 @@
 #!/bin/sh -e
+##############################################################
+#  Copyright (c) 2018 Steve Tarver. All rights reserved.     #
+#                                                            #
+#  This work is licensed under the terms of the MIT license. #
+#  For a copy, see <https://opensource.org/licenses/MIT>.    #
+##############################################################
 #
 # Example: Parsing utility script common command line arg patterns
 #
@@ -114,7 +120,7 @@ Calling conventions supported
   cmd -a -carg -- file file
 
 Examples:
-  ${0} -c arg   Minimal call, showing only the single required arg
+  ${0} -i 1   Minimal call, showing only the single required arg
 
 EOT
 }

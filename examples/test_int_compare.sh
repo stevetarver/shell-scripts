@@ -41,7 +41,7 @@ THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
     info "  n1 -le n2  True if the integer n1 is algebraically less than or equal to the integer n2."
     info
     info '  In Bourne scripts, usually:'
-    info '    [ "${N1}" flag "${S2}" ]'
+    info '    [ "${N1}" flag "${N2}" ]'
     info
     info 'NOTES:'
     info '- Interesting edge cases are null, empty, or space strings, valid strings,'
