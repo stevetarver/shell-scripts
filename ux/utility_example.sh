@@ -14,8 +14,8 @@
 # NOTES:
 #   We print data to stdout and info/errors to stderr. Callers can separate the two for
 #   easy data processing by adding '2>error.txt' at the end of the commandline.
-#   This flexibility also allows callers to show errors inline with stdout if they are
-#   not processing output and as a debugging aid.
+#   This flexibility also allows callers to show both output and errors in a single shell
+#   session if they are not processing output data, and as a debugging aid.
 #
 #   ERROR HANDLING
 #   If the getopts string does not start with a ':', it prints error messages to stderr
@@ -34,8 +34,8 @@
 #   - print more informative diagnostic messages
 #   - optionally show the help screen
 #
-#   STANDARD PRACTICE: always use getopts silent mode; we need to catch the errors
-#   to provide a good UX, verbose mode becomes redundant, inconsistent, and unpolished.
+#   STANDARD PRACTICE: always use getopts silent mode. We need to catch the errors
+#   to provide a good UX, so verbose mode becomes redundant, inconsistent, and unpolished.
 #
 # REFERENCES:
 #   IEEE Std 1003.1-2017 (POSIX.1-2017)
@@ -120,7 +120,8 @@ Calling conventions supported
   cmd -a -carg -- file file
 
 Examples:
-  ${0} -i 1   Minimal call, showing only the single required arg
+  Minimal call, showing only the single required arg
+    ${0} -i 1
 
 EOT
 }

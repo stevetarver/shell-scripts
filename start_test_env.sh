@@ -24,7 +24,8 @@
 #   'brew install coreutils' and greadlink.
 #
 if [ "$(uname -s)" = "Darwin" ]; then
-    # If called through a symlink, this will point to the symlink
+    # If called through a symlink, this will point to the symlink dir
+    # instead of the actual script dir.
     THIS_SCRIPT_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 else
     THIS_SCRIPT_DIR=$(dirname $(readlink -f "${0}"))
@@ -32,11 +33,12 @@ fi
 (
     cd ${THIS_SCRIPT_DIR}
 
-    echo "Running an Alpine Linux container with command: sh -c 'cd /tmp; sh'"
+    echo "Running an Alpine Linux container with command: sh"
     echo "and this project repo ($(pwd)) mounted as '/tmp'"
     docker run -it --rm     \
         --name alpine-test  \
         -v $(pwd):/tmp      \
+        --workdir /tmp      \
         alpine:3.6          \
-        sh -c 'cd /tmp; sh'
+        sh
 )

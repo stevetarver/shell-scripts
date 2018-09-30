@@ -198,7 +198,7 @@ light_magenta() {
 
 
 #########################################################################################
-# Foreground color functions:
+# Background color functions:
 bg_black() {
     _colorize ${_BG_BLACK} ${_RESET_ALL} "${@}"
 }
