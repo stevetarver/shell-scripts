@@ -1,7 +1,7 @@
 This repo contains Bourne shell templates, scripts, snippets, and a playground that I use to experiment with new concepts. This is the boilerplate I start most production quality scripts from, and now you can to! Wrote a blog about it, wanna see it? Here you go:
 
 * [Shell Scripts 1: Bourne back again](https://stevetarver.github.io/2018/06/12/shell-scripts-1-basics.html)
-* Shell Scripts 2: Creating a great UX
+* [Shell Scripts 2: Script utilities](http://stevetarver.github.io/2018/07/13/shell-scripts-2-ux.html)
 * Shell Scripts 3: Program flow control
 * Shell Scripts 4: Signals, Traps, and Docker scripts
 
